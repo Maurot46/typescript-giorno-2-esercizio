@@ -35,6 +35,9 @@ class MotherAccount extends SonAccount {
         super(n, _balanceInit);
         this.interest = .1;
     }
+    getInterest() {
+        return this.interest
+    }
 
     whitdraw(amount:number):number {
         let w = (amount + this.countInterest(amount));
@@ -56,3 +59,5 @@ class MotherAccount extends SonAccount {
         return a * this.interest;
     }
 }
+
+let m = new MotherAccount('test')
