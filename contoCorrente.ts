@@ -61,3 +61,4 @@ class MotherAccount extends SonAccount {
 }
 
 let m = new MotherAccount('test')
+console.log(m);

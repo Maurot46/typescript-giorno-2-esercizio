@@ -14,22 +14,64 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var SonAccount = /** @class */ (function () {
-    function SonAccount(_balanceInit) {
-        this.balanceInit = _balanceInit;
+    //2°step costruttore
+    function SonAccount(_nome, _balanceInit) {
+        if (_balanceInit === void 0) { _balanceInit = 0; }
+        this.balance = _balanceInit;
+        this.nome = _nome;
     }
-    SonAccount.prototype.versamentoUno = function () {
-        return this.balanceInit;
+    SonAccount.prototype.withdraw = function (amount) {
+        if (amount <= this.balance) {
+            this.balance -= amount;
+            return amount;
+        }
+        else {
+            console.log('Prelievo non effettuato');
+            return 0;
+        }
+    };
+    SonAccount.prototype.deposit = function (amount) {
+        this.balance += amount;
+        return amount;
+    };
+    SonAccount.prototype.whitdrawVenti = function () {
+        return this.withdraw(20);
+    };
+    SonAccount.prototype.depositVenti = function () {
+        return this.deposit(20);
     };
     return SonAccount;
 }());
-var primoVersamento = new SonAccount(100);
-console.log('Primo versamento €', primoVersamento.versamentoUno());
 var MotherAccount = /** @class */ (function (_super) {
     __extends(MotherAccount, _super);
-    function MotherAccount(_balanceInit) {
-        var _this = _super.call(this, _balanceInit) || this;
-        _this.balanceInit = _addinterest;
+    function MotherAccount(n, _balanceInit) {
+        if (_balanceInit === void 0) { _balanceInit = 0; }
+        var _this = _super.call(this, n, _balanceInit) || this;
+        _this.interest = .1;
         return _this;
     }
+    MotherAccount.prototype.getInterest = function () {
+        return this.interest;
+    };
+    MotherAccount.prototype.whitdraw = function (amount) {
+        var w = (amount + this.countInterest(amount));
+        if (w <= this.balance) {
+            this.balance -= w;
+            return w;
+        }
+        else {
+            return 0;
+        }
+    };
+    MotherAccount.prototype.deposit = function (amount) {
+        var d = (amount - this.countInterest(amount));
+        this.balance += d;
+        return d;
+    };
+    MotherAccount.prototype.countInterest = function (a) {
+        return a * this.interest;
+    };
     return MotherAccount;
 }(SonAccount));
+var m = new MotherAccount('test');
+console.log(m);
